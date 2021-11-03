@@ -39,7 +39,7 @@ private:
 
 
 /**
- * @brief cell permet de gérer un peu plus proprement les valeurs des cellules de la grille
+ * @brief cell permet de gérer un peu plus proprement les valeurs des cellules de la grille"
  */
 class cell
 {
