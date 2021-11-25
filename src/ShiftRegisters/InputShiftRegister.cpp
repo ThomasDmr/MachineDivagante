@@ -27,7 +27,7 @@ void     InputShiftRegister::updateState()
     {
         bool bitVal = digitalReadFast(m_dataPin);
         // Set the corresponding bit.
-        m_registerState |= bitVal << i;
+        m_registerState = helper::writeBit(m_registerState, i, bitVal);
 
         // Pulse the Clock (rising edge shifts the next bit).
         digitalWriteFast(m_clockPin, HIGH);

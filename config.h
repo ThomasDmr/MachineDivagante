@@ -65,3 +65,11 @@ const int PIN_LED_BM    = 24;
 const int PIN_BR    = 34;
 const int PIN_BL    = 38;
 const int PIN_BM    = 25;
+
+// WS led pins
+const int PIN_WS_SCREEN = 10;
+
+// display size
+const int       DISPLAY_WIDTH = 8;
+const int       DISPLAY_HEIGHT = 6;
+

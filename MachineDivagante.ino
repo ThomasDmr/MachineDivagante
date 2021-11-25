@@ -4,6 +4,7 @@
 #include "src/BananaPlug/BananaPlug.h"
 #include "src/ledControllers.h"
 #include "src/buttonControllers.h"
+#include "src/WSledDisplay/WSLedDisplay.h"
 
 Joystick joystick1(ADR_J1_UP, ADR_J1_DOWN, ADR_J1_LEFT, ADR_J1_RIGHT);
 Joystick joystick2(ADR_J2_UP, ADR_J2_DOWN, ADR_J2_LEFT, ADR_J2_RIGHT);
@@ -27,6 +28,8 @@ BananaPlug blackPlugLeft(BANANA_2_3, OUTPUT);
 BananaPlug bluePlugLeft(BANANA_2_4, OUTPUT);
 BananaPlug yellowPlugLeft(BANANA_2_5, OUTPUT);
 
+DisplayGrid displayGrid(DISPLAY_WIDTH, DISPLAY_HEIGHT, 50, PIN_WS_SCREEN);
+
 void setup()
 {
     // Initializing Hardware components
@@ -43,6 +46,8 @@ void setup()
     blackPlugLeft.init();
     bluePlugLeft.init();
     yellowPlugLeft.init();
+
+    displayGrid.init();
 }
 
 void loop()
@@ -63,5 +68,5 @@ void loop()
     blackPlugLow.update();
     bluePlugLow.update();
     yellowPlugLow.update();
-
+    displayGrid.updateDisplay();
 }

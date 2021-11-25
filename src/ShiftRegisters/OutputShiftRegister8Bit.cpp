@@ -42,7 +42,7 @@ void    OutputShiftRegister8Bit::updateState()
     if(m_registerState != m_previousRegisterState)
     {
         // Freeze current outputs
-        digitalWrite(m_latchPin, LOW);
+        digitalWriteFast(m_latchPin, LOW);
 
         // Loop to write each bit value from the serial in line of the SN74HC595 to the output.
         for(int i = 8; i >= 0; i--)
@@ -54,7 +54,7 @@ void    OutputShiftRegister8Bit::updateState()
         }
 
         // Write shift register values to storage register (change the outputs)
-        digitalWrite(m_latchPin, HIGH);
+        digitalWriteFast(m_latchPin, HIGH);
 
         m_previousRegisterState = m_registerState;
     }

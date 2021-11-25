@@ -1,5 +1,16 @@
 #pragma once 
 
+// Comment next line if you want to disable debug printing
+#define DEBUG
+
+#ifdef DEBUG
+#define DEBUG_PRINTLN(x)  Serial.println (x)
+#define DEBUG_PRINT(x)  Serial.print (x)
+#else
+#define DEBUG_PRINTLN(x)
+#define DEBUG_PRINT(x)
+#endif
+
 namespace helper
 {
     // Returns the bit value of a specefic bit (at the position "pos") in a number (binaryValue)
