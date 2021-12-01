@@ -7,8 +7,8 @@
 
 // PRJC Library to solve audio and WSled conflict 
 // https://github.com/PaulStoffregen/WS2812Serial
-#include <WS2812Serial.h>
-#include "../helperFunctions.h"
+#include "WS2812Serial.h"
+#include "../../include/helperFunctions.h"
 #include "../../config.h"
 
 struct rgb {
@@ -70,6 +70,7 @@ public:
     void    setAllToSingleColor(rgb rgb);
 
     void    setAllThroughTableRGB(int colorTable[][3]);
+    void    setAllThroughTableRGB(bool colorTable[][3]);
 
     Pixel   getSingleValue(int x, int y);
 

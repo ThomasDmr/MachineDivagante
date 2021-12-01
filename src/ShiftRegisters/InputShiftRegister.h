@@ -1,6 +1,6 @@
 #pragma once
 #include "Arduino.h"
-#include "../helperFunctions.h"
+#include "../../include/helperFunctions.h"
 
 class InputShiftRegister
 {

@@ -1,7 +1,7 @@
 // Suite de fonctions pour simplifier la gestion des LEDs
 
 // On inclu la librairie de gestion du Shift Register des LEDs
-#include "ShiftRegisters/OutputShiftRegister8Bit.h"
+#include "../src/ShiftRegisters/OutputShiftRegister8Bit.h"
 #include "../config.h"
 // On enveloppe tout ça dans un namespace pour éviter toutes confusions
 namespace LedControllers

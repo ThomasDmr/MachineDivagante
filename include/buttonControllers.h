@@ -1,7 +1,7 @@
 // Suite de fonctions pour simplifier la gestion des boutons poussoirs
 
 // On inclu la librairie de gestion du Shift Register des boutons
-#include "ShiftRegisters/InputShiftRegister.h"
+#include "../src/ShiftRegisters/InputShiftRegister.h"
 #include "../config.h"
 #include "helperFunctions.h"
 #include "Bounce2.h"

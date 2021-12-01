@@ -13,7 +13,7 @@ void    DisplayGrid::init()
 {
     rgb initColor = {85, 45, 0};
     m_leds.begin();
-    m_leds.setBrightness(100); // 0=off, 255=brightest
+    m_leds.setBrightness(60); // 0=off, 255=brightest
     setAllToSingleColor(initColor);
 
     updateDisplay();
@@ -63,11 +63,19 @@ void    DisplayGrid::setAllToSingleColor(rgb rgb)
     }
 }
 
-void    DisplayGrid::setAllThroughTableRGB(int colorTable[][3])
+void    DisplayGrid::setAllThroughTableRGB(bool colorTable[][3])
 {
     for(int i = 0; i < m_height * m_width; i++)
     {
         m_displayMatrix[i].setRGB(colorTable[i][0] * 255, colorTable[i][1] * 255, colorTable[i][2] * 255);
+    }
+}
+
+void    DisplayGrid::setAllThroughTableRGB(int colorTable[][3])
+{
+    for(int i = 0; i < m_height * m_width; i++)
+    {
+        m_displayMatrix[i].setRGB(colorTable[i][0], colorTable[i][1], colorTable[i][2]);
     }
 }
 

@@ -2,8 +2,10 @@
 #include "src/Joysticks/Joystick.h"
 #include "src/Potentiometer/Potentiometer.h"
 #include "src/BananaPlug/BananaPlug.h"
-#include "src/ledControllers.h"
-#include "src/buttonControllers.h"
+#include "include/ledControllers.h"
+#include "include/buttonControllers.h"
+#include "include/screenPixels.h"
+#include "include/audioControllers.h"
 #include "src/WSledDisplay/WSLedDisplay.h"
 
 Joystick joystick1(ADR_J1_UP, ADR_J1_DOWN, ADR_J1_LEFT, ADR_J1_RIGHT);
@@ -48,6 +50,8 @@ void setup()
     yellowPlugLeft.init();
 
     displayGrid.init();
+
+    displayGrid.setAllThroughTableRGB(definedDisplays::simonGame[0]);
 }
 
 void loop()
@@ -55,18 +59,17 @@ void loop()
     // Reading and updating the hardware input variables
     LedControllers::updateLedsStates();
     ButtonControllers::updateButtonsStates();
-
     joystick1.getLastFallingEdgeState(ButtonControllers::switchRegister.getFallingEdgeState());
-    joystick2.getLastFallingEdgeState(ButtonControllers::switchRegister.getFallingEdgeState());
-
-    LedControllers::turnOnLed(LedControllers::LED_B6);
-
-    ButtonControllers::wasButtonPressed(ButtonControllers::SW_B4);
-    
+    joystick2.getLastFallingEdgeState(ButtonControllers::switchRegister.getFallingEdgeState());   
     greenPlugLow.update();
     redPlugLow.update();
     blackPlugLow.update();
     bluePlugLow.update();
     yellowPlugLow.update();
+
+
+
+
+    // update the display
     displayGrid.updateDisplay();
 }

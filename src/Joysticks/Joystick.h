@@ -1,5 +1,5 @@
 #pragma once
-#include "../helperFunctions.h"
+#include "../../include/helperFunctions.h"
 
 class Joystick
 {
