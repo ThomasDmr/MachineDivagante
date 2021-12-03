@@ -11,9 +11,9 @@ DisplayGrid::DisplayGrid(int width, int height, int dimmer, int wsLedPin) :
 
 void    DisplayGrid::init()
 {
-    rgb initColor = {85, 45, 0};
+    rgb initColor = {0, 0, 0};
     m_leds.begin();
-    m_leds.setBrightness(60); // 0=off, 255=brightest
+    m_leds.setBrightness(200); // 0=off, 255=brightest
     setAllToSingleColor(initColor);
 
     updateDisplay();
@@ -63,6 +63,15 @@ void    DisplayGrid::setAllToSingleColor(rgb rgb)
     }
 }
 
+void    DisplayGrid::setAllToSingleColor(int r, int g, int b)
+{
+    rgb rgbColor = {r, g, b};
+    for(int i = 0; i < m_height * m_width; i++)
+    {
+        m_displayMatrix[i].setRGB(rgbColor);
+    }
+}
+
 void    DisplayGrid::setAllThroughTableRGB(bool colorTable[][3])
 {
     for(int i = 0; i < m_height * m_width; i++)
@@ -95,16 +104,12 @@ void        DisplayGrid::updateDisplay()
 {
     for (int i = 0; i < m_height * m_width; i++)
     {
-        DEBUG_PRINTLN(String(arrayPositionToLedAddress(i)) + "\t" 
-                            + String(m_displayMatrix[i].getRGB().r * m_dimmer / 255) + "\t"
-                            + String(m_displayMatrix[i].getRGB().g * m_dimmer / 255) + "\t"
-                            + String(m_displayMatrix[i].getRGB().b * m_dimmer / 255));
         m_leds.setPixel(arrayPositionToLedAddress(i), 
                             m_displayMatrix[i].getRGB().r * m_dimmer / 255, 
                             m_displayMatrix[i].getRGB().g * m_dimmer / 255,
                             m_displayMatrix[i].getRGB().b * m_dimmer / 255);
-        m_leds.show();
     }
+    m_leds.show();
 }
 
 int DisplayGrid::coordToArrayPosition(int x, int y)
@@ -124,7 +129,6 @@ int DisplayGrid::arrayPositionToLedAddress(int position)
 {
     int y = (position / m_width) + 1;
     int x = position%m_width + 1;
-    DEBUG_PRINTLN(String(x) + "\t" + String(y));
     if(y%2 == 0)
         return m_width * (m_height - y) + x - 1;
     else
@@ -180,7 +184,7 @@ void    Pixel::setRGB(int red, int green, int blue)
     m_rgb.r = red;
     m_rgb.g = green;
     m_rgb.b = blue;
-
+    
     m_hsv = this->rgb2hsv(m_rgb);
 }
 

@@ -26,4 +26,17 @@ namespace helper
     {
         return (binaryValue) ^ ((-bit ^ binaryValue) & (1UL << pos));
     }
+
+    struct rgb {
+    int r;       // int between 0 and 255
+    int g;       // int between 0 and 255
+    int b;       // int between 0 and 255
+    };
+
+    struct hsv{
+        int h;       // angle in degrees between 0 and 360
+        int s;       // int between 0 and 100
+        int v;       // int between 0 and 100
+    };
+
 } // namespace helper

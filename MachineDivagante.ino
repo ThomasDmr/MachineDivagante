@@ -1,36 +1,6 @@
 #include "config.h"
-#include "src/Joysticks/Joystick.h"
-#include "src/Potentiometer/Potentiometer.h"
-#include "src/BananaPlug/BananaPlug.h"
-#include "include/ledControllers.h"
-#include "include/buttonControllers.h"
-#include "include/screenPixels.h"
-#include "include/audioControllers.h"
-#include "src/WSledDisplay/WSLedDisplay.h"
-
-Joystick joystick1(ADR_J1_UP, ADR_J1_DOWN, ADR_J1_LEFT, ADR_J1_RIGHT);
-Joystick joystick2(ADR_J2_UP, ADR_J2_DOWN, ADR_J2_LEFT, ADR_J2_RIGHT);
-
-Potentiometer pot1(PIN_POT1);
-Potentiometer pot2(PIN_POT2);
-Potentiometer pot3(PIN_POT3);
-Potentiometer pot4(PIN_POT4);
-Potentiometer pot5(PIN_POT5);
-Potentiometer pot6(PIN_POT6);
-
-BananaPlug greenPlugLow(BANANA_1_1, INPUT_PULLUP);
-BananaPlug redPlugLow(BANANA_1_2, INPUT_PULLUP);
-BananaPlug blackPlugLow(BANANA_1_3, INPUT_PULLUP);
-BananaPlug bluePlugLow(BANANA_1_4, INPUT_PULLUP);
-BananaPlug yellowPlugLow(BANANA_1_5, INPUT_PULLUP);
-
-BananaPlug greenPlugLeft(BANANA_2_1, OUTPUT);
-BananaPlug redPlugLeft(BANANA_2_2, OUTPUT);
-BananaPlug blackPlugLeft(BANANA_2_3, OUTPUT);
-BananaPlug bluePlugLeft(BANANA_2_4, OUTPUT);
-BananaPlug yellowPlugLeft(BANANA_2_5, OUTPUT);
-
-DisplayGrid displayGrid(DISPLAY_WIDTH, DISPLAY_HEIGHT, 50, PIN_WS_SCREEN);
+#include "globalVariables.h"
+#include "gameLevels/introLevel.h"
 
 void setup()
 {
@@ -51,11 +21,14 @@ void setup()
 
     displayGrid.init();
 
-    displayGrid.setAllThroughTableRGB(definedDisplays::simonGame[0]);
+    tmpPixel.setRGB(0, 0, 0);
+    displayGrid.setAllToSingleColor(tmpPixel.getRGB());
+    //displayGrid.setAllThroughTableRGB(definedDisplays::simonGame[0]);
 }
 
 void loop()
 {
+    uint32_t timer = micros(); //DEBUG
     // Reading and updating the hardware input variables
     LedControllers::updateLedsStates();
     ButtonControllers::updateButtonsStates();
@@ -67,9 +40,15 @@ void loop()
     bluePlugLow.update();
     yellowPlugLow.update();
 
+    Serial.println("1\t" + String(micros() - timer)); // DEBUG
+    timer = micros(); //DEBUG
+    
+    runIntroLevel();
 
-
-
+    Serial.println("2\t" + String(micros() - timer)); //DEBUG
+    timer = micros(); //DEBUG
     // update the display
     displayGrid.updateDisplay();
+    Serial.println("3\t" + String(micros() - timer)); //DEBUG
+    timer = micros(); //DEBUG
 }
