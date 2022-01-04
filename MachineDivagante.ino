@@ -4,6 +4,9 @@
 
 void setup()
 {
+    // A19 is an unconnected analog pin that allows us to generate different random seeds 
+    randomSeed(analogRead(A19));
+    
     // Initializing Hardware components
     LedControllers::initLeds();
     ButtonControllers::initButtons();
