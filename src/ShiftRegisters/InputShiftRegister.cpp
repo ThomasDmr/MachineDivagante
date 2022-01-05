@@ -1,7 +1,7 @@
 #include "InputShiftRegister.h"
 
-InputShiftRegister::InputShiftRegister(int latchPin, int dataPin, int clockPin, int dataSize):
-                        m_latchPin(latchPin), m_dataPin(dataPin), m_clockPin(clockPin), m_dataSize(dataSize)
+InputShiftRegister::InputShiftRegister(int latchPin, int dataPin, int clockPin, int numberOfRegisters):
+                        m_latchPin(latchPin), m_dataPin(dataPin), m_clockPin(clockPin), m_numberOfRegisters(numberOfRegisters)
 {
     clearState();
 }
@@ -23,15 +23,18 @@ void     InputShiftRegister::updateState()
     digitalWrite(m_latchPin, HIGH);
 
     // Loop to read each bit value from the serial out line of the SN74HC165N.
-    for(int i = m_dataSize; i >=0; i--)
+    for(int i = 0; i < m_numberOfRegisters; i++)
     {
-        bool bitVal = digitalReadFast(m_dataPin);
-        // Set the corresponding bit.
-        m_registerState = helper::writeBit(m_registerState, i, bitVal);
+        for(int j = 7; j >= 0; j--)
+        {
+            bool bitVal = digitalReadFast(m_dataPin);
+            // Set the corresponding bit.
+            m_registerState = helper::writeBit(m_registerState, j + i * 8, bitVal);
 
-        // Pulse the Clock (rising edge shifts the next bit).
-        digitalWriteFast(m_clockPin, HIGH);
-        digitalWriteFast(m_clockPin, LOW);
+            // Pulse the Clock (rising edge shifts the next bit).
+            digitalWriteFast(m_clockPin, HIGH);
+            digitalWriteFast(m_clockPin, LOW);
+        }
     }
 
     // a^b donne la différence de bits entre a et b, puis & a donne cette différence uniquement quand a est à 1
