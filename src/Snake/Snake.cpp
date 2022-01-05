@@ -1,5 +1,5 @@
 #include "Snake.h"
-
+/*
 Cube::Cube(int initX, int initY, int maxX, int maxY)
 {
     
@@ -108,6 +108,7 @@ int Cube::getY()
 {
     return m_y;
 }
+*/
 
 /*
 void    Cube::setColor(rgb color)
@@ -144,6 +145,7 @@ void Cube::draw(DisplayGrid& displayGrid)
 }
 */
 
+/*
 Snake::Snake(int initHeadX, int initHeadY, int maxX, int maxY, int initBodySize = 0, int initStepInterval = 0) : 
                 m_head(initHeadX, initHeadY, maxX, maxY), m_currentBodySize(initBodySize), m_currentStepInterval(initStepInterval),
                 m_maxX(maxX), m_maxY(maxY), m_snack(1, 1, maxX, maxY), m_bodyColor(0, 125, 0), m_headColor(0, 255, 125)
@@ -318,3 +320,4 @@ bool Snake::updateBody(int direction)
 {
     int newHeadX = 
 }
+*/

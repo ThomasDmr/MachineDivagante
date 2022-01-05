@@ -6,7 +6,7 @@ class InputShiftRegister
 {
     public: 
 
-    InputShiftRegister(int latchPin, int dataPin, int clockPin, int dataSize = 16);
+    InputShiftRegister(int latchPin, int dataPin, int clockPin, int numberOfRegisters = 2);
 
     void    init();
     void    updateState();
@@ -19,7 +19,7 @@ class InputShiftRegister
     int m_latchPin;
     int m_dataPin;
     int m_clockPin;
-    int m_dataSize;
+    int m_numberOfRegisters;
     int m_registerState;
     int m_fallingEdgeState;
 };

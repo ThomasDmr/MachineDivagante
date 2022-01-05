@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include "../../include/helperFunctions.h"
 #include "../WSledDisplay/WSLedDisplay.h"
 
@@ -70,3 +70,4 @@ class Snake
     Pixel   m_bodyColor;
     Pixel   m_headColor;
 };
+*/

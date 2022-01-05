@@ -3,11 +3,12 @@
 #include "config.h"
 #include "src/Joysticks/Joystick.h"
 #include "src/Potentiometer/Potentiometer.h"
-#include "src/BananaPlug/BananaPlug.h"
+#include "src/Banana/BananaPlug.h"
 #include "include/ledControllers.h"
 #include "include/buttonControllers.h"
 #include "include/screenPixels.h"
 #include "src/WSledDisplay/WSLedDisplay.h"
+#include "src/Banana/BananaWSLeds.h"
 #include "include/audioControllers.h"
 #include "src/Snake/Snake.h"
 #include "src/SimonGame/SimonGame.h"
@@ -38,11 +39,12 @@ BananaPlug blackPlugLeft(BANANA_2_3, OUTPUT);
 BananaPlug bluePlugLeft(BANANA_2_4, OUTPUT);
 BananaPlug yellowPlugLeft(BANANA_2_5, OUTPUT);
 
-DisplayGrid displayGrid(DISPLAY_WIDTH, DISPLAY_HEIGHT, 100, PIN_WS_SCREEN);
+DisplayGrid displayGrid(DISPLAY_WIDTH, DISPLAY_HEIGHT, 5, PIN_WS_SCREEN);
 
-Cursor cursorP1(3, 3, tmpPixel.getRGB(), DISPLAY_WIDTH, DISPLAY_HEIGHT);
-Cursor cursorP2(6, 3, tmpPixel.getRGB(), DISPLAY_WIDTH, DISPLAY_HEIGHT);
+BananaLed   bananaLeds(PIN_WS_BANANA, 5);
 
+
+/*
 SimonElement simonElementB1(definedDisplays::simonGame[0], 200, 1000);
 SimonElement simonElementB2(definedDisplays::simonGame[1], 2000, 2000);
 SimonElement simonElementB3(definedDisplays::simonGame[2], 1000, 4000);
@@ -52,3 +54,4 @@ SimonElement simonElementB6(definedDisplays::simonGame[5], 1000, 1000);
 SimonElement simonElementBR(definedDisplays::simonGame[6], 1400, 1000);
 SimonElement simonElementBL(definedDisplays::simonGame[7], 1200, 1000);
 SimonElement simonElementBM(definedDisplays::simonGame[8], 1800, 500);
+*/

@@ -16,10 +16,11 @@ const int ADR_J1_UP     = 11;
 const int ADR_J1_DOWN   = 10;
 const int ADR_J1_LEFT   = 8;
 const int ADR_J1_RIGHT  = 9;
-const int ADR_J2_UP     = 15;
-const int ADR_J2_DOWN   = 14;
-const int ADR_J2_LEFT   = 12;
-const int ADR_J2_RIGHT  = 13;
+// WARNING : the J2 controller is mounted upside-down, so up-down and left-right are inverted
+const int ADR_J2_UP     = 14;
+const int ADR_J2_DOWN   = 15;
+const int ADR_J2_LEFT   = 13;
+const int ADR_J2_RIGHT  = 12;
 
 
 // LED output register (74hc565) pins 
@@ -27,7 +28,7 @@ const int LED_DS    = 5; // data pin
 const int LED_STCP  = 6; // latch pin
 const int LED_SHCP  = 7; // clock pin 
 
-// Output register parallel output adresses (position in the register)
+// Output register parallel output adresses (position in the register) + 100 to avoid overlap
 const int ADR_B1_LED    = 4;
 const int ADR_B2_LED    = 3;
 const int ADR_B3_LED    = 5;
@@ -36,8 +37,8 @@ const int ADR_B5_LED    = 0;
 const int ADR_B6_LED    = 1;
 
 // Potentiometers
-const int PIN_POT1  = A17;
-const int PIN_POT2  = A16;
+const int PIN_POT1  = A16;
+const int PIN_POT2  = A15;
 const int PIN_POT3  = A3;
 const int PIN_POT4  = A4;
 const int PIN_POT5  = A12;
@@ -48,7 +49,7 @@ const int BANANA_1_1  = 16;
 const int BANANA_1_2  = 15;
 const int BANANA_1_3  = 14;
 const int BANANA_1_4  = 13;
-const int BANANA_1_5  = A22;
+const int BANANA_1_5  = 39;
 
 const int BANANA_2_1  = 19;
 const int BANANA_2_2  = 20;
@@ -58,16 +59,17 @@ const int BANANA_2_5  = 23;
 
 // Pins des leds des boutons centraux
 const int PIN_LED_BR    = 33;
-const int PIN_LED_BL    = 37;
+const int PIN_LED_BL    = 36;
 const int PIN_LED_BM    = 24;
 
 // Pins des boutons centraux
-const int PIN_BR    = 34;
-const int PIN_BL    = 38;
+const int PIN_BR    = 30;
+const int PIN_BL    = 37;
 const int PIN_BM    = 25;
 
 // WS led pins
 const int PIN_WS_SCREEN = 10;
+const int PIN_WS_BANANA = 26;
 
 // display size
 const int       DISPLAY_WIDTH = 8;

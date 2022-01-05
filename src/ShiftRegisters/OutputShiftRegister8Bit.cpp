@@ -9,7 +9,7 @@ OutputShiftRegister8Bit::OutputShiftRegister8Bit(int latchPin, int dataPin, int 
 void    OutputShiftRegister8Bit::init()
 {
     pinMode(m_latchPin, OUTPUT);
-    pinMode(m_dataPin, INPUT);
+    pinMode(m_dataPin, OUTPUT);
     pinMode(m_clockPin, OUTPUT);
     digitalWrite(m_latchPin, HIGH);
     digitalWrite(m_clockPin, LOW);
@@ -63,4 +63,5 @@ void    OutputShiftRegister8Bit::updateState()
 void    OutputShiftRegister8Bit::clearOutput()
 {
     m_registerState = 0;
+    m_previousRegisterState = -1;
 }
