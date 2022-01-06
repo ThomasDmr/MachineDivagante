@@ -1,5 +1,8 @@
 #pragma once
 
+// Uncomment the next line to run the hardware test routine
+//#define TEST_HARDWARE
+
 // Switch Input register (sn74hc165) pins 
 const int SW_CLK    = 2; // clock 
 const int SW_SH     = 3; // latch pin

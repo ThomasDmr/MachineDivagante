@@ -39,10 +39,12 @@ BananaPlug blackPlugLeft(BANANA_2_3, OUTPUT);
 BananaPlug bluePlugLeft(BANANA_2_4, OUTPUT);
 BananaPlug yellowPlugLeft(BANANA_2_5, OUTPUT);
 
-DisplayGrid displayGrid(DISPLAY_WIDTH, DISPLAY_HEIGHT, 5, PIN_WS_SCREEN);
+DisplayGrid displayGrid(DISPLAY_WIDTH, DISPLAY_HEIGHT, 10, PIN_WS_SCREEN);
 
 BananaLed   bananaLeds(PIN_WS_BANANA, 5);
 
+// We initialize the Snake globally because it will be used in different modes
+Snake   globalSnake(3, 3, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 
 /*
 SimonElement simonElementB1(definedDisplays::simonGame[0], 200, 1000);
