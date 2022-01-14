@@ -1,12 +1,9 @@
 #pragma once
 
-#define AUDIO_MODE
-#ifdef AUDIO_MODE // quicker compilation without audio libraries for hardware testing
-
 #include <Audio.h>
 #include <synth_simple_drum.h>
-#include "AudioChords.h"
 
+#ifdef AUDIO_ENABLED
 namespace AudioController
 {
     // variable chorus
@@ -26,8 +23,12 @@ namespace AudioController
     AudioSynthSimpleDrum drum1;
     AudioSynthToneSweep myEffect;
 
-    AudioSynthWaveformSine sine2;
     AudioSynthWaveformSine sine1;
+    AudioSynthWaveformSine sine2;
+    AudioSynthWaveformSine sine3;
+    AudioSynthWaveformSine sine4;
+    AudioSynthWaveformSine sine5;
+    AudioSynthWaveformSine sine6;
 
     AudioEffectChorus l_myEffect;
     AudioEffectChorus r_myEffect;
@@ -38,6 +39,7 @@ namespace AudioController
     AudioMixer4 mix2; //
     AudioMixer4 mix3; //
     AudioMixer4 mix4; //
+    AudioMixer4 mix5; //
 
     //AudioOutputAnalog  dac;     // play to both I2S audio board and on-chip DAC
     AudioOutputAnalogStereo dacs1;
@@ -57,9 +59,14 @@ namespace AudioController
     AudioConnection patchCord11(sine1, 0, mix3, 2);
     AudioConnection patchCord12(sine2, 0, mix3, 3);
     AudioConnection patchCord13(mix3, 0, mix4, 0); // output of mix3 into 1st input on mix4
+    AudioConnection patchCord14(sine3, 0, mix4, 1);
+    AudioConnection patchCord15(sine4, 0, mix4, 2);
+    AudioConnection patchCord16(sine5, 0, mix4, 3);
+    AudioConnection patchCord17(mix4, 0, mix5, 0); // output of mix4 into 1st input on mix5
+    AudioConnection patchCord18(sine6, 0, mix5, 1);
 
-    AudioConnection patchCord14(mix4, 0, dacs1, 0); // patch on OUTPUT DAC0
-    AudioConnection patchCord15(mix4, 0, dacs1, 1); // patch on OUTPUT DAC0
+    AudioConnection patchCord19(mix5, 0, dacs1, 0); // patch on OUTPUT DAC0
+    AudioConnection patchCord20(mix5, 0, dacs1, 1); // patch on OUTPUT DAC0
 
     ///////////////////////////// SETUP AUDIO ////////////////////////////////////
     void initAudioControllers()
@@ -100,9 +107,14 @@ namespace AudioController
         mix3.gain(3, 0.1);
 
         mix4.gain(0, 0.8);
-        mix4.gain(1, 0.8);
-        mix4.gain(2, 0.8);
-        mix4.gain(3, 0.8);
+        mix4.gain(1, 0.1);
+        mix4.gain(2, 0.1);
+        mix4.gain(3, 0.1);
+
+        mix5.gain(0, 0.8);
+        mix5.gain(1, 0.1);
+        mix5.gain(2, 0.8);
+        mix5.gain(3, 0.8);
 
         ak4558.enable();
         ak4558.enableOut();
@@ -121,4 +133,4 @@ namespace AudioController
     }
 }// namespace AudioController
 
-#endif //AUDIO_MODE
+#endif //AUDIO_ENABLED

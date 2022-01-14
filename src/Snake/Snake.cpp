@@ -11,6 +11,7 @@ Cube::Cube(int initX, int initY, rgb initColor, int maxX, int maxY)
 
     m_color.setRGB(initColor);
     setCoordinates(initX, initY);
+    m_blinkInterval = 0;
 }
 
 Cube::Cube(int maxX, int maxY) : m_x(1), m_y(1)
@@ -19,6 +20,7 @@ Cube::Cube(int maxX, int maxY) : m_x(1), m_y(1)
     m_color.setRGB(black);
     m_maxX = maxX;
     m_maxY = maxY;
+    m_blinkInterval = 0;
 }
 
 void    Cube::setCoordinates(int x, int y)
@@ -80,6 +82,19 @@ bool    Cube::moveLeft()
 
 bool    Cube::moveUp()
 {
+    if(m_y + 1 > m_maxY)
+    {
+        return true;
+    }
+    else
+    {
+        m_y += 1;
+        return false;
+    }
+}
+
+bool    Cube::moveDown()
+{
     if(m_y - 1 <= 0)
     {
         return true;
@@ -91,17 +106,9 @@ bool    Cube::moveUp()
     }
 }
 
-bool    Cube::moveDown()
+void    Cube::blink(int interval)
 {
-    if(m_y + 1 > m_maxY)
-    {
-        return true;
-    }
-    else
-    {
-        m_y += 1;
-        return false;
-    }
+    m_blinkInterval = interval;
 }
 
 int Cube::getX()
@@ -131,7 +138,20 @@ Pixel     Cube::getColor()
 
 void Cube::draw(DisplayGrid& displayGrid)
 {
-    displayGrid.changeSingleValue(this->getX(), this->getY(), this->getColor().getRGB());
+    if(m_blinkInterval == 0 || millis() - m_timer < m_blinkInterval)
+    {
+        displayGrid.changeSingleValue(this->getX(), this->getY(), this->getColor().getRGB());
+    }
+    else
+    {
+        rgb black = {0, 0, 0};
+        displayGrid.changeSingleValue(this->getX(), this->getY(), black);
+        
+        if(millis() - m_timer >  m_blinkInterval + 100)
+        {
+            m_timer = millis();
+        }
+    }
 }
 
 //================================================================================
@@ -162,8 +182,6 @@ void Snake::reset(int initHeadX, int initHeadY, int initBodySize, int initStepIn
 
 void Snake::draw(DisplayGrid& displayGrid)
 {
-    rgb dark = {0, 0, 0};
-    displayGrid.setAllToSingleColor(dark);
     // If body Size = 0, we only draw the head to use as a cursor
     if(m_currentBodySize != 0)
     {
@@ -172,6 +190,9 @@ void Snake::draw(DisplayGrid& displayGrid)
             m_body[i%MAX_SNAKE_SIZE].draw(displayGrid);
         }
     }
+
+    if(m_currentBodySize == MAX_SNAKE_SIZE - 1)
+        m_blinkSnack();
 
     if(m_allowSnack)
         m_snack.draw(displayGrid);
@@ -240,6 +261,13 @@ bool Snake::hasWon()
     return m_currentBodySize >= MAX_SNAKE_SIZE;
 }
 
+bool Snake::hasCapturedSnack()
+{
+    bool tmp = m_snackCaptured;
+    m_snackCaptured = false;
+    return tmp;
+}
+
 void Snake::useSnack(bool useSnack)
 {
     if(m_currentBodySize != 0)
@@ -253,9 +281,12 @@ void Snake::updateStepInterval(uint32_t stepInterval)
 
 void Snake::setBodyColor(hsv newColor)
 {
-    for(int i = 0; i < MAX_SNAKE_SIZE; i++)
+    if(m_currentBodySize != 0)
     {
-        m_body[i].setColor(newColor);
+        for(int i = 0; i < MAX_SNAKE_SIZE; i++)
+        {
+            m_body[i].setColor(newColor);
+        }
     }
 }
 
@@ -273,14 +304,17 @@ void Snake::m_move()
 {
     if(!m_hasLost)
     {
-        if(m_timer == 0)
+        if(m_timer == 0 && m_currentStepInterval != 0)
+        {
             m_timer = millis();
-        
+        }
         // if m_currentStepInterval != 0 the snake moves automatically after a time interval
         if(m_currentStepInterval != 0 && millis() - m_timer > m_currentStepInterval)
         {
             m_timer = millis();
             m_hasLost = m_updateBody(m_currentDirection);
+
+            // If it's the last snack, we change the color each round
         }
     }
 }
@@ -294,9 +328,11 @@ void Snake::m_init(int initHeadX, int initHeadY, int initBodySize, int initStepI
 
     m_hasLost = false;
     m_allowSnack = false;
-    m_currentDirection = (initHeadX >= m_maxX / 2) ? LEFT : RIGHT;
+    m_snackCaptured = false;
+    m_currentDirection = -1;
     m_timer = 0; 
     m_tailIndex = 0;
+    m_blinkTimer = 0;
 
     m_head.setColor(m_headColor.getRGB());
     m_head.setCoordinates(initHeadX, initHeadY);
@@ -325,12 +361,15 @@ void Snake::m_randomSnack()
         x = random(1, m_maxX + 1);
         y = random(1, m_maxY + 1);
         newSnack = true;
-        for(int i = m_tailIndex; i < m_tailIndex + m_currentBodySize; i++)
+        if(m_currentBodySize != 0)
         {
-            if(x == m_body[i%MAX_SNAKE_SIZE].getX() && y == m_body[i%MAX_SNAKE_SIZE].getY()) 
+        for(int i = m_tailIndex; i < m_tailIndex + m_currentBodySize; i++)
             {
-                newSnack = false;
-                break;
+                if(x == m_body[i%MAX_SNAKE_SIZE].getX() && y == m_body[i%MAX_SNAKE_SIZE].getY()) 
+                {
+                    newSnack = false;
+                    break;
+                }
             }
         }
 
@@ -391,6 +430,7 @@ bool Snake::m_updateBody(int direction)
     {
         // If we did we generate a new snack and increase the body size
         m_currentBodySize += 1;
+        m_snackCaptured = true;
 
         if(m_currentBodySize > MAX_SNAKE_SIZE)
         {
@@ -405,6 +445,7 @@ bool Snake::m_updateBody(int direction)
     {
         // If we didn't we remove the tail by incrementing the tail index
         m_tailIndex = (m_tailIndex + 1 == MAX_SNAKE_SIZE) ? 0 : m_tailIndex + 1;
+        m_snackCaptured = false;
     }
 
     /*
@@ -437,4 +478,15 @@ bool Snake::m_updateBody(int direction)
     */
 
     return lost;
+}
+
+void    Snake::m_blinkSnack()
+{
+    if(millis() - m_blinkTimer > 150)
+    {
+        m_blinkTimer = millis();
+        
+        rgb snackColor = {random(10, 255), random(10, 255), 125};
+        m_snack.setColor(snackColor);
+    }
 }

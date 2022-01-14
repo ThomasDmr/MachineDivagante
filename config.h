@@ -1,7 +1,10 @@
 #pragma once
 
 // Uncomment the next line to run the hardware test routine
-//#define TEST_HARDWARE
+// #define TEST_HARDWARE
+
+// Uncomment the next line to add all the audio elements
+#define AUDIO_ENABLED
 
 // Switch Input register (sn74hc165) pins 
 const int SW_CLK    = 2; // clock 

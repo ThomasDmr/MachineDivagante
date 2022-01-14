@@ -60,8 +60,10 @@ public:
     void    setAllToSingleColor(rgb rgb);
     void    setAllToSingleColor(int r, int g, int b);
 
-    void    setAllThroughTableRGB(int colorTable[][3]);
+    void    setAllThroughTableHSV(hsv colorTable[]);
     void    setAllThroughTableRGB(bool colorTable[][3]);
+
+    void    maintainCurrentBackground(uint32_t maintainTime);
 
     Pixel   getSingleValue(int x, int y);
 
@@ -77,6 +79,7 @@ private:
     int     m_width;
     int     m_height;
     int     m_dimmer;
+    uint32_t m_screenTimer, m_screenMaintainTime;
     Pixel   m_displayMatrix[DISPLAY_WIDTH * DISPLAY_WIDTH];
 
     WS2812Serial   m_leds;

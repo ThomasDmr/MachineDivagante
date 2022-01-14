@@ -1,11 +1,19 @@
 #include "config.h"
 #include "globalVariables.h"
 #include "gameLevels/harwareTest.h"
+#include "gameLevels/introLevel.h"
 #include "gameLevels/snakeLevel.h"
-//#include "gameLevels/introLevel.h"
+#include "gameLevels/simonLevel.h"
+#include "gameLevels/guitarLevel.h"
+#include "gameLevels/senquencerLevel.h"
+
 
 // DEBUG
-bool snakeLevelActivated = true;
+bool snakeLevelActivated = 0;
+bool introLevelActivated = 0;
+bool simonLevelActivated = 0;
+bool guitarLevelActivated = 0;
+bool sequencerLevelActivated = 1;
 
 void setup()
 {
@@ -23,6 +31,10 @@ void setup()
     displayGrid.init();
     tmpPixel.setRGB(50, 50, 50);
     displayGrid.setAllToSingleColor(tmpPixel.getRGB());
+
+#ifdef AUDIO_ENABLED
+    AudioController::initAudioControllers();
+#endif
 }
 
 void loop()
@@ -45,7 +57,37 @@ void loop()
 #ifdef TEST_HARDWARE
     hardwareTest::runFullHardwareTests();
 #else
+    rgb dark = {0, 0, 0};
+    displayGrid.setAllToSingleColor(dark);
     
+    if(introLevelActivated)
+    {
+        introLevel::runIntroLevel();
+    }
+    else
+    {
+        introLevel::exitIntroLevel();
+    }
+
+    if(guitarLevelActivated)
+    {
+        GuitarLevel::runGuitarLevel();
+    }
+
+    if(sequencerLevelActivated)
+    {
+        sequencerLevel::runSequencerLevel();
+    }
+    else
+    {
+        sequencerLevel::exitSequencerLevel();
+    }
+
+    if(simonLevelActivated)
+    {
+        SimonLevel::runSimonLevel();
+    }
+
     if(snakeLevelActivated)
     {
         SnakeLevel::runSnakeLevel();

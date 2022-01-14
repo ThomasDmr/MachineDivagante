@@ -7,7 +7,9 @@ DMAMEM byte     display_Memory[DISPLAY_WIDTH * DISPLAY_HEIGHT * 12];       // 12
 DisplayGrid::DisplayGrid(int width, int height, int dimmer, int wsLedPin) : 
                 m_width(width), m_height(height), m_dimmer(dimmer),
                 m_leds(width * height, display_Memory, drawing_Memory, wsLedPin, WS2812_GRB)
-{}
+{
+    m_screenTimer = 0;
+}
 
 void    DisplayGrid::init()
 {
@@ -47,44 +49,75 @@ void    DisplayGrid::changeSingleValue(int x, int y, rgb rgb)
     }
 }
 
+void    DisplayGrid::maintainCurrentBackground(uint32_t maintainTime)
+{
+    // If we have a maintain time defined and we aren't already maintaining a screen
+    if(maintainTime != 0 && m_screenTimer == 0)
+    {
+        m_screenTimer = millis();
+        m_screenMaintainTime = maintainTime;
+    }
+}
+
 void    DisplayGrid::setAllToSingleColor(hsv hsv)
 {
-    for(int i = 0; i < m_height * m_width; i++)
+    if(m_screenTimer == 0 || millis() - m_screenTimer > m_screenMaintainTime)
     {
-        m_displayMatrix[i].setHSB(hsv);
+        m_screenTimer = 0;
+        for(int i = 0; i < m_height * m_width; i++)
+        {
+            m_displayMatrix[i].setHSB(hsv);
+        }
     }
 }
 
 void    DisplayGrid::setAllToSingleColor(rgb rgb)
 {
-    for(int i = 0; i < m_height * m_width; i++)
+    if(m_screenTimer == 0 || millis() - m_screenTimer > m_screenMaintainTime)
     {
-        m_displayMatrix[i].setRGB(rgb);
+        m_screenTimer = 0;
+        for(int i = 0; i < m_height * m_width; i++)
+        {
+            m_displayMatrix[i].setRGB(rgb);
+        }
     }
 }
 
 void    DisplayGrid::setAllToSingleColor(int r, int g, int b)
 {
     rgb rgbColor = {r, g, b};
-    for(int i = 0; i < m_height * m_width; i++)
+
+    if(m_screenTimer == 0 || millis() - m_screenTimer > m_screenMaintainTime)
     {
-        m_displayMatrix[i].setRGB(rgbColor);
+        m_screenTimer = 0;
+        for(int i = 0; i < m_height * m_width; i++)
+        {
+            m_displayMatrix[i].setRGB(rgbColor);
+        }
     }
 }
 
 void    DisplayGrid::setAllThroughTableRGB(bool colorTable[][3])
 {
-    for(int i = 0; i < m_height * m_width; i++)
+    if(m_screenTimer == 0 || millis() - m_screenTimer > m_screenMaintainTime)
     {
-        m_displayMatrix[i].setRGB(colorTable[i][0] * 255, colorTable[i][1] * 255, colorTable[i][2] * 255);
+        m_screenTimer = 0;
+        for(int i = 0; i < m_height * m_width; i++)
+        {
+            m_displayMatrix[i].setRGB(colorTable[i][0] * 255, colorTable[i][1] * 255, colorTable[i][2] * 255);
+        }
     }
 }
 
-void    DisplayGrid::setAllThroughTableRGB(int colorTable[][3])
+void    DisplayGrid::setAllThroughTableHSV(hsv colorTable[])
 {
-    for(int i = 0; i < m_height * m_width; i++)
+    if(m_screenTimer == 0 || millis() - m_screenTimer > m_screenMaintainTime)
     {
-        m_displayMatrix[i].setRGB(colorTable[i][0], colorTable[i][1], colorTable[i][2]);
+        m_screenTimer = 0;
+        for(int i = 0; i < m_height * m_width; i++)
+        {
+            m_displayMatrix[i].setHSB(colorTable[i]);
+        }
     }
 }
 
@@ -130,9 +163,9 @@ int DisplayGrid::arrayPositionToLedAddress(int position)
     int y = (position / m_width) + 1;
     int x = position%m_width + 1;
     if(y%2 == 0)
-        return m_width * (m_height - y) + x - 1;
+        return m_width * (y) - x;
     else
-        return m_width * (m_height - y) + (m_width - x); 
+        return (y - 1) * m_width + (x - 1); 
 }
 
 //===========================     Class Pixel    =========================

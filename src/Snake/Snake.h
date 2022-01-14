@@ -20,6 +20,7 @@ class Cube
     bool    moveUp();
     bool    moveDown();
     void    setCoordinates(int x, int y);
+    void    blink(int interval);
 
     int     getX();
     int     getY();
@@ -32,6 +33,7 @@ class Cube
     private:
     int     m_x, m_maxX;
     int     m_y, m_maxY;
+    int     m_blinkInterval, m_timer;
     Pixel   m_color;
 };
 
@@ -49,6 +51,7 @@ class Snake
 
     bool        hasLost();
     bool        hasWon();
+    bool        hasCapturedSnack();
 
     // Setters
     void        updateStepInterval(uint32_t stepInterval);
@@ -63,9 +66,10 @@ class Snake
     void    m_randomSnack();
     bool    m_updateBody(int direction);
     void    m_move();
+    void    m_blinkSnack();
 
-    bool     m_hasLost, m_allowSnack;
-    uint32_t m_timer, m_currentStepInterval;
+    bool     m_hasLost, m_allowSnack, m_snackCaptured;
+    uint32_t m_timer, m_currentStepInterval, m_blinkTimer;
 
     int     m_currentBodySize;
     int     m_maxX, m_maxY;

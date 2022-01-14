@@ -24,6 +24,11 @@ bool Joystick::wentRight()
     return helper::getBit(m_fallingEdgeState, m_rightAddress);
 }
 
+bool Joystick::moved()
+{
+    return wentUp() || wentDown() || wentLeft() || wentRight();
+}
+
 void Joystick::getLastFallingEdgeState(int fallingEdgeState)
 {
     m_fallingEdgeState = fallingEdgeState;

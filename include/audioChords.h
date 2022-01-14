@@ -39,22 +39,24 @@
 // according to http://www.guitar-chords.org.uk/
 // and http://www.8notes.com/guitar_chord_chart/c.asp
 //
-              // open =  NOTE_E2  NOTE_A2  NOTE_D3  NOTE_G3  NOTE_B3  NOTE_E4
-float Cmajor[6] = {      0, NOTE_C3, NOTE_E3, NOTE_G3, NOTE_C4, NOTE_E4};  // C - E - G
-float Dmajor[6] = {      0,       0, NOTE_D3, NOTE_A3, NOTE_D4, NOTE_Fs4}; // D - F# - A
-float Emajor[6] = {NOTE_E2, NOTE_B2, NOTE_E3, NOTE_Gs3,NOTE_B3, NOTE_E4};  // E - G# - B
-float Fmajor[6] = {      0, NOTE_A2, NOTE_F3, NOTE_A3, NOTE_C4, NOTE_F4};  // F - A - C
-float Gmajor[6] = {NOTE_G2, NOTE_B2, NOTE_D3, NOTE_G3, NOTE_B3, NOTE_E4};  // G - B - D
-float Amajor[6] = {      0, NOTE_A2, NOTE_E3, NOTE_A3, NOTE_Cs4,NOTE_E4};  // A - C# - E
-float Bmajor[6] = {      0, NOTE_B2, NOTE_Fs3,NOTE_B3, NOTE_Ds4,NOTE_Fs4}; // B - D# - F#
-float Cminor[6] = {      0, NOTE_C3, NOTE_G3, NOTE_C4, NOTE_Ds4,NOTE_G4};  // C - D# - G
-float Dminor[6] = {      0,       0, NOTE_D3, NOTE_A3, NOTE_D4, NOTE_F4};  // D - F - A
-float Eminor[6] = {NOTE_E2, NOTE_B2, NOTE_E3, NOTE_G3, NOTE_B3, NOTE_E4};  // E - G - B
-float Fminor[6] = {NOTE_F2, NOTE_C3, NOTE_F3, NOTE_Gs3,NOTE_C4, NOTE_F4};  // F - G# - C
-float Gminor[6] = {NOTE_G2, NOTE_D3, NOTE_G3, NOTE_As3,NOTE_D3, NOTE_G4};  // G - A# - D
-float Aminor[6] = {      0, NOTE_A2, NOTE_E3, NOTE_A3, NOTE_C4, NOTE_E4};  // A - C - E
-float Bminor[6] = {      0, NOTE_B2, NOTE_Fs3,NOTE_B3, NOTE_D4, NOTE_Fs4}; // B - D - F#
-
+// open =  NOTE_E2  NOTE_A2  NOTE_D3  NOTE_G3  NOTE_B3  NOTE_E4
+float chordScale[14][6] = 
+{
+    {      0, NOTE_C3, NOTE_E3, NOTE_G3, NOTE_C4, NOTE_E4},  //Cmajor C - E - G
+    {      0,       0, NOTE_D3, NOTE_A3, NOTE_D4, NOTE_Fs4}, //Dmajor D - F# - A
+    {NOTE_E2, NOTE_B2, NOTE_E3, NOTE_Gs3,NOTE_B3, NOTE_E4},  //Emajor E - G# - B
+    {      0, NOTE_A2, NOTE_F3, NOTE_A3, NOTE_C4, NOTE_F4},  //Fmajor F - A - C
+    {NOTE_G2, NOTE_B2, NOTE_D3, NOTE_G3, NOTE_B3, NOTE_E4},  //Gmajor G - B - D
+    {      0, NOTE_A2, NOTE_E3, NOTE_A3, NOTE_Cs4,NOTE_E4},  //Amajor A - C# - E
+    {      0, NOTE_B2, NOTE_Fs3,NOTE_B3, NOTE_Ds4,NOTE_Fs4}, //Bmajor B - D# - F#
+    {      0, NOTE_C3, NOTE_G3, NOTE_C4, NOTE_Ds4,NOTE_G4},  //Cminor C - D# - G
+    {      0,       0, NOTE_D3, NOTE_A3, NOTE_D4, NOTE_F4},  //Dminor D - F - A
+    {NOTE_E2, NOTE_B2, NOTE_E3, NOTE_G3, NOTE_B3, NOTE_E4},  //Eminor E - G - B
+    {NOTE_F2, NOTE_C3, NOTE_F3, NOTE_Gs3,NOTE_C4, NOTE_F4},  //Fminor F - G# - C
+    {NOTE_G2, NOTE_D3, NOTE_G3, NOTE_As3,NOTE_D3, NOTE_G4},  //Gminor G - A# - D
+    {      0, NOTE_A2, NOTE_E3, NOTE_A3, NOTE_C4, NOTE_E4},  //Aminor A - C - E
+    {      0, NOTE_B2, NOTE_Fs3,NOTE_B3, NOTE_D4, NOTE_Fs4}  //Bminor B - D - F#
+};
 
 //                   E2, F2, F2#, G2, G2#, A2, A2#, B2
 // C3, C3#, D3, D3#, E3, F3, F3#, G3, G3#, A3, A3#, B3

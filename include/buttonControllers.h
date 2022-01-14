@@ -58,7 +58,7 @@ bool isButtonActive(Button button)
         return (BRbouncer.read() == 0);
         break;
     default:
-        return helper::getBit(switchRegister.getCurrentState(), button);
+        return !helper::getBit(switchRegister.getCurrentState(), button);
         break;
     }
 }

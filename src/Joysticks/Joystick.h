@@ -10,6 +10,7 @@ class Joystick
     bool wentDown();
     bool wentLeft();
     bool wentRight();
+    bool moved();
 
     void getLastFallingEdgeState(int fallingEdgeState);
 
