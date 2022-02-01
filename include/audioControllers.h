@@ -31,9 +31,6 @@ namespace AudioController
     AudioSynthWaveformSine sine6;
 
     AudioEffectChorus l_myEffect;
-    //AudioEffectChorus r_myEffect;
-
-    //AudioControlAK4558 ak4558;
 
     AudioMixer4 mix1; //  4-channel mixers
     AudioMixer4 mix2; //
@@ -41,7 +38,6 @@ namespace AudioController
     AudioMixer4 mix4; //
     AudioMixer4 mix5; //
 
-    //AudioOutputAnalog  dac;     // play to both I2S audio board and on-chip DAC
     AudioOutputAnalogStereo dacs1;
 
     AudioConnection patchCord28(drum1, 0, l_myEffect, 0);
@@ -75,15 +71,6 @@ namespace AudioController
         // detailed information, see the MemoryAndCpuUsage example
         AudioMemory(10);
 
-        // turn on the output
-        //  audioShield.enable();
-        // audioShield.volume(0.5);
-
-        // by default the Teensy 3.1 DAC uses 3.3Vp-p output
-        // if your 3.3V power has noise, switching to the
-        // internal 1.2V reference can give you a clean signal
-        // dac.analogReference(INTERNAL);
-
         drum1.frequency(60);
         drum1.length(1500);
         drum1.secondMix(0.0);
@@ -116,17 +103,11 @@ namespace AudioController
         mix5.gain(2, 0.8);
         mix5.gain(3, 0.8);
 
-        /*
-        ak4558.enable();
-        ak4558.enableOut();
-        */
-
         l_myEffect.begin(l_delayline, CHORUS_DELAY_LENGTH, n_chorus);
     }
 
-    // trigger sound drum
+    
     // trigger a sound
-
     void triggerSound(int myFreq, int myLengthSound)
     {
         drum1.noteOn();

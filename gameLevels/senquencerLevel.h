@@ -221,18 +221,6 @@ void runSequencerLevel()
     hsv p2Color = {pot1.getValueMapped(0, 359), 100, pot2.getValueMapped(10, 100)};
     playerCursor2.setColor(p2Color);
 
-    /*
-    static uint32_t test = millis();
-
-    if(millis() - test > 2000)
-    {
-        Serial.println("Pot\t" + String(pot1.getValueMapped(0, 359)) + "\t" + String(100) + "\t" + String(pot2.getValueMapped(10, 100)));
-        Serial.println("HSV\t" + String(playerCursor2.getColor().getHSB().h) + "\t" + String(playerCursor2.getColor().getHSB().s) + "\t" + String(playerCursor2.getColor().getHSB().v));
-        Serial.println("RGB\t" + String(playerCursor2.getColor().getRGB().r) + "\t" + String(playerCursor2.getColor().getRGB().g) + "\t" + String(playerCursor2.getColor().getRGB().b));
-        test = millis();
-    }
-    */
-
     // draw all the elements (first the grid then the cursors !)
     displayGrid.setAllThroughTableHSV(sequencerGrid);
     playerCursor1.draw(displayGrid);

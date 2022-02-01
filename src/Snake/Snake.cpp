@@ -448,35 +448,6 @@ bool Snake::m_updateBody(int direction)
         m_snackCaptured = false;
     }
 
-    /*
-    String output = "[ ";
-
-    for(int i = 0; i < MAX_SNAKE_SIZE; i++)
-    {
-        if(m_tailIndex + m_currentBodySize < MAX_SNAKE_SIZE)
-        {
-            if(i < m_tailIndex)
-                output+= "_ ";
-            else if(i < m_tailIndex + m_currentBodySize)
-                output+= "B ";
-            else
-                output+= "_ ";
-        }
-        else
-        {
-            if(i < (m_tailIndex + m_currentBodySize)%MAX_SNAKE_SIZE)
-                output+= "B ";
-            else if(i < m_tailIndex)
-                output+= "_ ";
-            else
-                output+= "B ";
-        }
-    }
-
-    output += "]";
-    DEBUG_PRINTLN(output);
-    */
-
     return lost;
 }
 

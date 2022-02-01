@@ -6,7 +6,7 @@ class SimonElement
 {
     public:
     SimonElement(int imageId, int buttonId, int ledId, int soundFrequency, int soundLength);
-    //bool**  getImage();
+
     int     getImageId();
     int     getFrequency();
     int     getSoundLength();
@@ -16,12 +16,10 @@ class SimonElement
     void    setPlayedStatus(bool yesOrNo);
     bool    hasBeenPlayed();
 
-    //void    printImage();
 
     private:
 
     bool    m_wasPlayed;
-    //bool    m_displayImage[48][3];
     int     m_imageId;
     int     m_soundFrequency;
     int     m_soundLength;
