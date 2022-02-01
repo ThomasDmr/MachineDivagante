@@ -13,9 +13,6 @@
 #include "src/Snake/Snake.h"
 #include "src/SimonElement/SimonElement.h"
 
-Pixel tmpPixel(50, 50, 50);
-
-
 Joystick joystick1(ADR_J1_UP, ADR_J1_DOWN, ADR_J1_LEFT, ADR_J1_RIGHT);
 Joystick joystick2(ADR_J2_UP, ADR_J2_DOWN, ADR_J2_LEFT, ADR_J2_RIGHT);
 
@@ -27,21 +24,23 @@ Potentiometer pot4(PIN_POT4, true);
 Potentiometer pot5(PIN_POT5, true);
 Potentiometer pot6(PIN_POT6, true);
 
-BananaPlug greenPlugLow(BANANA_1_1, INPUT_PULLUP);
-BananaPlug redPlugLow(BANANA_1_2, INPUT_PULLUP);
-BananaPlug blackPlugLow(BANANA_1_3, INPUT_PULLUP);
-BananaPlug bluePlugLow(BANANA_1_4, INPUT_PULLUP);
-BananaPlug yellowPlugLow(BANANA_1_5, INPUT_PULLUP);
+BananaPlug plug1Low(BANANA_1_1, INPUT_PULLUP);
+BananaPlug plug2Low(BANANA_1_2, INPUT_PULLUP);
+BananaPlug plug3Low(BANANA_1_3, INPUT_PULLUP);
+BananaPlug plug4Low(BANANA_1_4, INPUT_PULLUP);
+BananaPlug plug5Low(BANANA_1_5, INPUT_PULLUP);
 
-BananaPlug greenPlugLeft(BANANA_2_1, OUTPUT);
-BananaPlug redPlugLeft(BANANA_2_2, OUTPUT);
-BananaPlug blackPlugLeft(BANANA_2_3, OUTPUT);
-BananaPlug bluePlugLeft(BANANA_2_4, OUTPUT);
-BananaPlug yellowPlugLeft(BANANA_2_5, OUTPUT);
+BananaPlug plug1Left(BANANA_2_1, OUTPUT);
+BananaPlug plug2Left(BANANA_2_2, OUTPUT);
+BananaPlug plug3Left(BANANA_2_3, OUTPUT);
+BananaPlug plug4Left(BANANA_2_4, OUTPUT);
+BananaPlug plug5Left(BANANA_2_5, OUTPUT);
 
-DisplayGrid displayGrid(DISPLAY_WIDTH, DISPLAY_HEIGHT, 10, PIN_WS_SCREEN);
+// The third parameter corresponds to a light intensity dimmer. Increase it to increase intensity
+DisplayGrid displayGrid(DISPLAY_WIDTH, DISPLAY_HEIGHT, 20, PIN_WS_SCREEN);
 
-BananaLed   bananaLeds(PIN_WS_BANANA, 5);
+// The second parameter corresponds to a light intensity dimmer. Increase it to increase intensity
+BananaLed   bananaLeds(PIN_WS_BANANA, 20);
 
 // We initialize the Snake globally because it will be used in different modes
 Snake   globalSnake(3, 4, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);

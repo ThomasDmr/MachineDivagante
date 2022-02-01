@@ -28,6 +28,8 @@ void exitSnakeLevel()
 
 void runSnakeLevel()
 {
+    displayGrid.setAllToSingleColor(0, 0, 0);
+    
     if(!snakeLevelInitiated)
         initSnakeLevel();
 

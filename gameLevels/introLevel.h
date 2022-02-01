@@ -22,6 +22,16 @@ void initIntroLevel()
 void exitIntroLevel()
 {
     localSnake.reset(6, 3, 0, 0); // free dynamic memory
+    
+    if(introLevelInitiated)
+    {
+        // Cutting the sound when leaving the intro level
+        AudioController::sine2.amplitude(0);
+        AudioController::sine1.amplitude(0);
+        AudioController::sine2.frequency(0);
+        AudioController::sine1.frequency(0);
+    }
+    
     introLevelInitiated = false;
 }
 

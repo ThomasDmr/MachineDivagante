@@ -47,6 +47,35 @@ void showPotValues()
     }
 }
 
+void showBananaConnected()
+{
+    static uint32_t timer = 0;
+    static int previousBananaState[5] = {0};
+
+    if(millis() - timer > 500)
+    {
+        timer = millis();
+        int currentBananaState[5];
+        currentBananaState[0] = plug1Low.isActive();
+        currentBananaState[1] = plug2Low.isActive();
+        currentBananaState[2] = plug3Low.isActive();
+        currentBananaState[3] = plug4Low.isActive();
+        currentBananaState[4] = plug5Low.isActive();
+
+        String output = "";
+        for(int i=0; i < 5; i++)
+        {
+            if(currentBananaState[i] != previousBananaState[i])
+            {
+                previousBananaState[i] = currentBananaState[i];
+                output += String(i) + ": " + String(currentBananaState[i]) + "\t";
+            }
+        }
+        if(output.length() > 0)
+            DEBUG_PRINTLN(output);
+    }        
+
+}
 
 void testBananaLedsOneByOne()
 {
@@ -111,8 +140,8 @@ void testDisplay()
         timer = millis();
         if(index == 0)
         {
-            tmpPixel.setRGB(random(255), random(255), random(255));
-            displayGrid.setAllToSingleColor(tmpPixel.getRGB());
+            rgb randomRGB = {random(255), random(255), random(255)};
+            displayGrid.setAllToSingleColor(randomRGB);
         }
         else
         {
@@ -130,9 +159,13 @@ void runFullHardwareTests()
 {
     LedControllers::testLedsOneByOne();
 
+    showBananaConnected();
+
     testBananaLedsOneByOne();
 
     showPotValues();
+
+    
 
     ButtonControllers::displayButtonsAction();
 

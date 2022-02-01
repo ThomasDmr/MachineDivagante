@@ -31,9 +31,9 @@ namespace AudioController
     AudioSynthWaveformSine sine6;
 
     AudioEffectChorus l_myEffect;
-    AudioEffectChorus r_myEffect;
+    //AudioEffectChorus r_myEffect;
 
-    AudioControlAK4558 ak4558;
+    //AudioControlAK4558 ak4558;
 
     AudioMixer4 mix1; //  4-channel mixers
     AudioMixer4 mix2; //
@@ -103,21 +103,23 @@ namespace AudioController
 
         mix3.gain(0, 0.8);
         mix3.gain(1, 0.8);
-        mix3.gain(2, 0.1);
-        mix3.gain(3, 0.1);
+        mix3.gain(2, 0.05);
+        mix3.gain(3, 0.05);
 
         mix4.gain(0, 0.8);
-        mix4.gain(1, 0.1);
-        mix4.gain(2, 0.1);
-        mix4.gain(3, 0.1);
+        mix4.gain(1, 0.05);
+        mix4.gain(2, 0.05);
+        mix4.gain(3, 0.05);
 
         mix5.gain(0, 0.8);
-        mix5.gain(1, 0.1);
+        mix5.gain(1, 0.05);
         mix5.gain(2, 0.8);
         mix5.gain(3, 0.8);
 
+        /*
         ak4558.enable();
         ak4558.enableOut();
+        */
 
         l_myEffect.begin(l_delayline, CHORUS_DELAY_LENGTH, n_chorus);
     }

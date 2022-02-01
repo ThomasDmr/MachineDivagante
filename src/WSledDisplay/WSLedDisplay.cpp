@@ -23,29 +23,37 @@ void    DisplayGrid::init()
 
 void    DisplayGrid::changeSingleValue(int x, int y, hsv hsv)
 {
-    int ledNumber = coordToArrayPosition(x, y);
+    if(m_screenTimer == 0 || millis() - m_screenTimer > m_screenMaintainTime)
+    {
+        m_screenTimer = 0;  
+        int ledNumber = coordToArrayPosition(x, y);
 
-    if(ledNumber == -1)
-    {
-        return;
-    }
-    else
-    {
-        m_displayMatrix[ledNumber].setHSB(hsv);
+        if(ledNumber == -1)
+        {
+            return;
+        }
+        else
+        {
+            m_displayMatrix[ledNumber].setHSB(hsv);
+        }
     }
 }
 
 void    DisplayGrid::changeSingleValue(int x, int y, rgb rgb)
 {
-    int ledNumber = coordToArrayPosition(x, y);
+    if(m_screenTimer == 0 || millis() - m_screenTimer > m_screenMaintainTime)
+    {
+        m_screenTimer = 0;  
+        int ledNumber = coordToArrayPosition(x, y);
 
-    if(ledNumber == -1)
-    {
-        return;
-    }
-    else
-    {
-        m_displayMatrix[ledNumber].setRGB(rgb);
+        if(ledNumber == -1)
+        {
+            return;
+        }
+        else
+        {
+            m_displayMatrix[ledNumber].setRGB(rgb);
+        }
     }
 }
 
@@ -102,9 +110,14 @@ void    DisplayGrid::setAllThroughTableRGB(bool colorTable[][3])
     if(m_screenTimer == 0 || millis() - m_screenTimer > m_screenMaintainTime)
     {
         m_screenTimer = 0;
-        for(int i = 0; i < m_height * m_width; i++)
+        for(int i = 0; i < m_height; i++)
         {
-            m_displayMatrix[i].setRGB(colorTable[i][0] * 255, colorTable[i][1] * 255, colorTable[i][2] * 255);
+            for(int j = 0; j < m_width; j++)
+            {
+                // Warning : colorTable input has (0, 0) origin on the upper left corner
+                // whereas m_displayMatrix has the (0, 0) origin on the lower left corner. 
+                m_displayMatrix[(m_height - i - 1) * m_width + j].setRGB(colorTable[i * m_width + j][0] * 255, colorTable[i * m_width + j][1] * 255, colorTable[i * m_width + j][2] * 255);
+            }
         }
     }
 }

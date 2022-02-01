@@ -31,11 +31,6 @@ void initSequencer()
     playerCursor2.blink(1000);
 }
 
-void exitSequencerLevel()
-{
-    sequencerInitialized = false;
-}
-
 void generateRandomNoteMapping(int fillRatePercentage)
 {
     for (int i = 0; i < DISPLAY_WIDTH * DISPLAY_HEIGHT; i++)
@@ -99,6 +94,17 @@ void turnOffPlayers()
     {
         playSineNote(0, 0 , i + 1);
     }
+}
+
+void exitSequencerLevel()
+{
+    if(sequencerInitialized)
+    {
+        // Turn off playing notes when leaving the sequencer mode
+        generateRandomNoteMapping(0);
+        turnOffPlayers();
+    }
+    sequencerInitialized = false;
 }
 
 void addCursorToSequencer(Cube& cursor)
@@ -232,9 +238,10 @@ void runSequencerLevel()
     playerCursor1.draw(displayGrid);
     playerCursor2.draw(displayGrid);
 
-    // Finally run the sequencer 
-    int reader1Speed = pot5.getValueMapped(50, 800);
-    int reader2Speed = pot6.getValueMapped(50, 800);
+    // Finally run the sequencer
+    // The potentiometer values are inverted for better user experience
+    int reader1Speed = pot5.getValueMapped(800, 20);
+    int reader2Speed = pot6.getValueMapped(800, 20);
     runSequencerReader(reader1Speed, reader2Speed);
 }
 

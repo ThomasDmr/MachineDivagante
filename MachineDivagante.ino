@@ -7,14 +7,6 @@
 #include "gameLevels/guitarLevel.h"
 #include "gameLevels/senquencerLevel.h"
 
-
-// DEBUG
-bool snakeLevelActivated = 0;
-bool introLevelActivated = 0;
-bool simonLevelActivated = 0;
-bool guitarLevelActivated = 0;
-bool sequencerLevelActivated = 1;
-
 void setup()
 {
     // A19 is an unconnected analog pin that allows us to generate different random seeds 
@@ -29,8 +21,8 @@ void setup()
 
     // initializes the display and sets all the leds to a unique color
     displayGrid.init();
-    tmpPixel.setRGB(50, 50, 50);
-    displayGrid.setAllToSingleColor(tmpPixel.getRGB());
+    rgb initRGB = {50, 50, 50};
+    displayGrid.setAllToSingleColor(initRGB);
 
 #ifdef AUDIO_ENABLED
     AudioController::initAudioControllers();
@@ -45,11 +37,11 @@ void loop()
     ButtonControllers::updateButtonsStates();
     joystick1.getLastFallingEdgeState(ButtonControllers::switchRegister.getFallingEdgeState());
     joystick2.getLastFallingEdgeState(ButtonControllers::switchRegister.getFallingEdgeState());   
-    greenPlugLow.update();
-    redPlugLow.update();
-    blackPlugLow.update();
-    bluePlugLow.update();
-    yellowPlugLow.update();
+    plug1Low.update();
+    plug2Low.update();
+    plug3Low.update();
+    plug4Low.update();
+    plug5Low.update();
     //====================================================
 
     //================= MAIN CODE ========================
@@ -59,8 +51,8 @@ void loop()
 #else
     rgb dark = {0, 0, 0};
     displayGrid.setAllToSingleColor(dark);
-    
-    if(introLevelActivated)
+     
+    if(!plug1Low.isActive() && !plug2Low.isActive() && !plug3Low.isActive() && !plug4Low.isActive() && !plug5Low.isActive())
     {
         introLevel::runIntroLevel();
     }
@@ -69,12 +61,12 @@ void loop()
         introLevel::exitIntroLevel();
     }
 
-    if(guitarLevelActivated)
+    if(plug1Low.isActive())
     {
         GuitarLevel::runGuitarLevel();
     }
 
-    if(sequencerLevelActivated)
+    if(plug2Low.isActive())
     {
         sequencerLevel::runSequencerLevel();
     }
@@ -83,18 +75,27 @@ void loop()
         sequencerLevel::exitSequencerLevel();
     }
 
-    if(simonLevelActivated)
+    if(plug3Low.isActive())
     {
         SimonLevel::runSimonLevel();
     }
+    else
+    {
+        SimonLevel::exitSimonLevel();
+    }
 
-    if(snakeLevelActivated)
+    if(plug4Low.isActive())
     {
         SnakeLevel::runSnakeLevel();
     }
     else
     {
         SnakeLevel::exitSnakeLevel();
+    }
+
+    if(plug5Low.isActive())
+    {
+        // video level
     }
 
 #endif
@@ -109,14 +110,14 @@ void loop()
 
 void initBananaPlugs()
 {
-    greenPlugLow.init();
-    redPlugLow.init();
-    blackPlugLow.init();
-    bluePlugLow.init();
-    yellowPlugLow.init();
-    greenPlugLeft.init();
-    redPlugLeft.init();
-    blackPlugLeft.init();
-    bluePlugLeft.init();
-    yellowPlugLeft.init();
+    plug1Left.init();
+    plug2Left.init();
+    plug3Left.init();
+    plug4Left.init();
+    plug5Left.init();
+    plug1Low.init();
+    plug2Low.init();
+    plug3Low.init();
+    plug4Low.init();
+    plug5Low.init();
 }

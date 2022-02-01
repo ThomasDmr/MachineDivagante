@@ -219,6 +219,7 @@ void runSimonLevel()
     if(startIntroSequence)
     {
         introSequence();
+        startSequenceDisplay = true;
     }
     else if(startSequenceDisplay)
     {
@@ -307,4 +308,13 @@ void runSimonLevel()
         }
     }
 }
+
+void exitSimonLevel()
+{
+    currentSequenceLength = initialSequenceLength;
+    startIntroSequence = true;
+    startSequenceDisplay = true;
+    newSequence = true;
+}
+
 } // namespace SimonLevel

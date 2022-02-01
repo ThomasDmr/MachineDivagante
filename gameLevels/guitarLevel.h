@@ -45,7 +45,7 @@ namespace GuitarLevel
     void runGuitarLevel()
     {   
         // Set background color through pot5 and pot6
-        rgb backGroundColor = {pot5.getValueMapped(10, 255), 0, pot6.getValueMapped(10, 255)};
+        rgb backGroundColor = {pot5.getValueMapped(10, 255), pot6.getValueMapped(10, 255), 0};
         displayGrid.setAllToSingleColor(backGroundColor);
 
         // get scales and velocities  
